@@ -1,6 +1,7 @@
 library(readxl)
 library(dplyr)
 
+### Read Data
 # List Excel files with all variants from the 29 families
 #  - Output from Varseq with relevant columns selected
 files = list.files(pattern="*-simple.xlsx")
@@ -32,7 +33,9 @@ data <- do.call(rbind, data)
 # Show data
 data
 
-# Count number of families with a variant in a specific gene
+
+
+### Count number of families with a variant in a specific gene
 # - First: summarise all variants within a family i.e. keep only one row for
 #   each gene with variants for each family
 genes <- data %>%
@@ -54,8 +57,13 @@ res1 = genes %>%
 
 # View the resulting data frame
 View(res1)
+# Write resulting data frame to file
+write.table(res, file = "Genes_seen_at_least_once_in_all_families.txt",
+            quote = F, sep = "\t", row.names = F)
 
-# Count the number of times a unique variant is seen in the families
+
+
+### Count the number of times a unique variant is seen in the families
 # - First: summarise all unique variants within a family i.e. keep only one row
 #   for each unique variant for each family
 variants <- data %>%
@@ -72,3 +80,6 @@ res2 = variants %>%
 
 # View the resulting data frame
 View(res2)
+# Write resulting data frame to file
+write.table(res, file = "Variants_seen_at_least_once_in_all_families.txt",
+            quote = F, sep = "\t", row.names = F)
