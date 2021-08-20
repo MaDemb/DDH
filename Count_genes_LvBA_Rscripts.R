@@ -4,6 +4,7 @@ library(dplyr)
 # List Excel files with all variants from the 29 families
 #  - Output from Varseq with relevant columns selected
 files = list.files(pattern="*-simple.xlsx")
+# Show list of file names
 files
 
 # Function to read Excel files
@@ -65,7 +66,8 @@ variants <- data %>%
 #   one variant in that gene, and sort the counts in descending order.
 res2 = variants %>%
   group_by(gene, HGVS_c, HGVS_p, seq_ontology, effect) %>%
-  summarise(families = paste0(fam, collapse = ", "), count = n()) %>%
+  summarise(families = paste0(fam, collapse = ", "),
+            count = n()) %>%
   arrange(desc(count))
 
 # View the resulting data frame
